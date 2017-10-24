@@ -2,6 +2,7 @@ library(dplyr)
 library(magrittr)
 library(readr)
 library(zoo)
+library(hydroTSM)
 
 ################################################################################
 # Files to drop into rawdir:                                                   #
@@ -23,22 +24,12 @@ rawdir <- file.path(basedir,"raw")
 #         exclude stations for which no catchment attributes are available.    #
 ################################################################################
 
-# extract stationcodes present in metadata table
-sc_md <- read_csv(file.path(rawdir, "1_Catchment_attributes.csv")) %>%
-  pull(gage_id) %>%
-  as.character()
+dc_all <- read_csv(file.path(rawdir,"3_Catchment_streamflow_mm.csv")) %>%
+  mutate(Date=as.Date(paste(year,month,day,sep="-"))) %>%
+  select(Date,everything(),-c(X1,year,month,day)) %>%
+  mutate_at(vars(-Date),as.double)%>%
+  mutate_at(vars(-Date),round,10)
 
-dc_all <- read_csv(file.path(rawdir, "cr2_qflxDaily_2017.txt")) %>%
-  # get rid of the metadata header
-  extract(-c(1:14),) %>%
-  # fix leading zero in station names
-  rename_at(vars(starts_with("0")),funs(substring(., 2))) %>%
-  rename(Date=codigo_estacion) %>%
-  # filter down to stations available in metadata table
-  select(Date,one_of(sc_md)) %>%
-  # reformat data columns
-  mutate_at(vars(-Date),as.double) %>%
-  mutate_at(vars(-Date),funs(na_if(.,-9999)))
 
 # subset to remove leading and trailing all(NA) rows
 ixna <- apply(dc_all[,-1],1,function(x) all(is.na(x)))
@@ -46,4 +37,4 @@ ixmin <- min(which(ixna == FALSE))
 ixmax <- max(which(ixna == FALSE))
 dc_all <- dc_all[ixmin:ixmax,]
 # save to disk
-write_delim(dc_all,file.path(basedir,"discharge_all.csv"))
+write_delim(dc_all,file.path(basedir,"discharge_mm.csv"),na="")
