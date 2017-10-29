@@ -1,0 +1,17 @@
+Package: baseflowchile
+Type: Package
+Title: Streamflow data for Chile
+Version: 0.1.0
+Authors@R: person("Joschka", "Thurner",email="joschka.thurner@th-koeln.de>",role=c("aut","cre"),comment="Institute for Technology and Resources Management in the Tropics and Subtropics, TH Cologne")
+Maintainer: Joschka Thurner <joschka.thurner@th-koeln.de>
+Description: Pre-processed streamflow data from Chile for baseflow-analysis.
+  Contains helper functions to calculate gap statistics for selected date ranges.
+URL: https://github.com/jthurner/baseflowchile
+BugReports: https://github.com/jthurner/baseflowchile
+License: GPL-3
+Imports: dplyr, hydroTSM, lubridate, magrittr, openxlsx, readr, zoo
+Depends: R (>= 3.2.0)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
+Roxygen: list(markdown = TRUE)

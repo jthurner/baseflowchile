@@ -1,0 +1,7 @@
+# Raw data is static and too big to be checked into github but can be downloaded from:
+# http://www.cr2.cl/download/camels-cl/
+# http://www.cr2.cl/recursos-y-publicaciones/bases-de-datos/datos-de-caudales/
+*
+!.gitignore
+!missing-elev-from-DEM.csv
+!Descripcion_CAMELS_CL.txt
