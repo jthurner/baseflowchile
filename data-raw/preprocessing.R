@@ -1,6 +1,8 @@
 library(dplyr)
 library(readr)
 library(devtools)
+library(stringr)
+
 
 ################################################################################
 # The following files are not included in git and have to be dropped into      #
@@ -25,7 +27,11 @@ cl_streamflow_mm <- read_csv("data-raw/3_Catchment_streamflow_mm.csv") %>%
   mutate(Date=as.Date(paste(year,month,day,sep="-"))) %>%
   select(Date,everything(),-c(X1,year,month,day)) %>%
   mutate_at(vars(-Date),as.double) %>%
-  mutate_at(vars(-Date),round,10)
+  mutate_at(vars(-Date),round,10) %>%
+  # prefix station codes
+  rename_at(vars(-Date),funs(if_else(. < 1000000,
+                                     paste0("q0", .),
+                                     paste0("q", .))))
 
 # subset to remove leading and trailing all(NA) rows
 ixna <- apply(cl_streamflow_mm[,-1],1,function(x) all(is.na(x)))
@@ -53,6 +59,9 @@ missing_elevation <- read_csv("data-raw/missing-elev-from-DEM.csv") %>%
 cl_catchment_md <- read_csv("data-raw/1_Catchment_attributes.csv") %>%
   rename(stationcode=gage_id, station_name=gage_name,latitude=gage_lat,
          longitude=gage_lon) %>%
+  # add main river and river segment
+  mutate(main_river = as.integer(str_sub(stationcode, end=-6)),
+         river_segment = as.integer(str_sub(stationcode,-5,-4))) %>%
   # add elevation, start, end from station metadata file
   left_join(md_stations) %>%
   # add missing elevation
@@ -60,7 +69,10 @@ cl_catchment_md <- read_csv("data-raw/1_Catchment_attributes.csv") %>%
   mutate(elevation=coalesce(na_if(elevation,0),elevation_DEM)) %>%
   select(-elevation_DEM) %>%
   # reorder
-  select(-starts_with("lc"),-starts_with("wu"),everything())
-
+  select(-starts_with("lc"),-starts_with("wu"),everything()) %>%
+  # prefix stationcode
+  mutate(sc1 = if_else(stationcode<10000000,
+                       paste0("q0",stationcode),
+                       paste0("q",stationcode)))
 # save metadata
 use_data(cl_catchment_md, overwrite=TRUE)

@@ -91,7 +91,7 @@ gap_statistics <- function(x, date_ranges, completeness_threshold=100,md=cl_catc
   all_ranges <- lapply(date_ranges,gaps_statistics_single,x=x,
                          completeness_threshold=completeness_threshold)
   dplyr::as_tibble(unlist(all_ranges,recursive = FALSE))%>%
-    dplyr::mutate(stationcode=as.integer(colnames(x)[-1])) %>%
+    dplyr::mutate(stationcode=colnames(x)[-1]) %>%
     dplyr::left_join(md,.) %>%
     dplyr::select(-starts_with("lc"),-starts_with("wu"),everything())
 }
