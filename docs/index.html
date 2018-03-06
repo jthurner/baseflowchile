@@ -29,7 +29,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
+  <a href="/index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -62,47 +62,39 @@
     
 <div class="contents">
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-<div id="baseflowchile" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#baseflowchile" class="anchor"></a>baseflowchile</h1></div>
+<section id="baseflowchile" class="level1"><div class="page-header"><h1>baseflowchile</h1></div>
 <p>Pre-processed streamflow data (1913-2016) from Chile for baseflow-analysis. Contains helper functions to calculate gap statistics for selected date ranges.</p>
 <p>Install from github with <code><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">devtools::install_github("jthurner/baseflowchile")</a></code>.</p>
 <p>Created at <a href="http://www.tt.th-koeln.de/">ITT Cologne</a>.</p>
-<div id="data-source" class="section level2">
-<h2 class="hasAnchor">
-<a href="#data-source" class="anchor"></a>Data Source</h2>
-<p><em>Alvarez-Garreton, C., Mendoza, P., Boisier, J. P., Galleguillos, M., Zambrano-Bigiarini, M., Lara, A., Addor, N., Puelma, C., Cortes, G., Garreaud, R., and McPhee, J.:</em> The CAMELS-CL dataset: catchment attributes and meteorology for large sample studies – Chile dataset, to be submitted to Hydrol. Earth Syst. Sci.</p>
-<p><a href="http://www.cr2.cl/recursos-y-publicaciones/bases-de-datos/datos-informacion-integrada-por-cuencas/">Download Link</a></p>
-</div>
-<div id="usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
+<section id="data-source" class="level2"><h2>Data Source</h2>
+<p><em>Alvarez-Garreton, C., Mendoza, P., Boisier, J. P., Galleguillos, M., Zambrano-Bigiarini, M., Lara, A., Addor, N., Puelma, C., Cortes, G., Garreaud, R., and McPhee, J.:</em> <a href="https://doi.org/10.5194/hess-2018-23">The CAMELS-CL dataset: catchment attributes and meteorology for large sample studies – Chile dataset, to be submitted to Hydrol. Earth Syst. Sci.</a></p>
+<p>The original dataset can be downloaded from <a href="http://www.cr2.cl/recursos-y-publicaciones/bases-de-datos/datos-informacion-integrada-por-cuencas/">here</a>.</p>
+</section><section id="usage" class="level2"><h2>Usage</h2>
 <p>The package contains cleaned-up streamflow data in mm and associated catchment characteristics from the CAMELS-CL dataset (the script used for preprocessing can be found in the source package).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(baseflowchile)
-<span class="co"># streamflow time series as tibble</span>
-cl_streamflow_mm
-<span class="co"># converting to zoo if needed</span>
-zoo<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/zoo/topics/read.zoo">read.zoo</a></span>(<span class="kw">as.data.frame</span>(cl_streamflow_mm))
-<span class="co"># catchment characteristics - see link above for description of columns</span>
-cl_catchment_md</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(baseflowchile)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co"># streamflow time series as tibble</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">cl_streamflow_mm</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co"># converting to zoo if needed</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">zoo<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/zoo/topics/read.zoo">read.zoo</a></span>(<span class="kw">as.data.frame</span>(cl_streamflow_mm))</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co"># catchment characteristics - see link above for description of columns</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">cl_catchment_md</a></code></pre></div>
 <p>The function gap_statistics() adds daily and monthly completeness percentages (c_d, c_m) and the longest monthly gap (l_g) to the metadata table. Gap analysis is performed seperately for the specified date ranges.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">date_ranges &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"1985-1994"</span>,<span class="st">"1995-2004"</span>,<span class="st">"2005-2015"</span>,<span class="st">"1985-2015"</span>)
-cl_md_gaps &lt;-<span class="st"> </span><span class="kw"><a href="reference/gap_statistics.html">gap_statistics</a></span>(cl_streamflow_mm, date_ranges,<span class="dt">completeness_threshold=</span><span class="dv">80</span>)
-cl_md_gaps
-## filter down further as needed, e.g. to include only stations above 700m:
-<span class="co"># library(dplyr)</span>
-<span class="co"># cl_md_gaps &lt;- filter(cl_md_gaps, elevation &gt;= 700)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">date_ranges &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"1985-1994"</span>,<span class="st">"1995-2004"</span>,<span class="st">"2005-2015"</span>,<span class="st">"1985-2015"</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">cl_md_gaps &lt;-<span class="st"> </span><span class="kw"><a href="reference/gap_statistics.html">gap_statistics</a></span>(cl_streamflow_mm, date_ranges,<span class="dt">completeness_threshold=</span><span class="dv">80</span>)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">cl_md_gaps</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">## filter down further as needed, e.g. to include only stations above 700m:</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co"># library(dplyr)</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co"># cl_md_gaps &lt;- filter(cl_md_gaps, elevation &gt;= 700)</span></a></code></pre></div>
 <p>With the gap statistics added to the metadata, extract_ts() filters out stations with certain gap characteristics for each date range and returns the resulting streamflow time series as well as separate metadata tables containing only the stations used. Optionally, the metadata tables can be written out as an excel file and the time series as seperate csv files per station (sorted into directories for each date range).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># for each date range, consider only stations which have at least 80% of data (daily + monthly) and no </span>
-<span class="co"># consecutive gap longer than 6 months</span>
-cl_v1 &lt;-<span class="st"> </span><span class="kw"><a href="reference/extract_ts.html">extract_ts</a></span>(cl_streamflow_mm, cl_md_gaps, date_ranges, <span class="dt">c_d_min =</span> <span class="dv">80</span>, <span class="dt">c_m_min =</span> <span class="dv">80</span>, <span class="dt">lg_max =</span> <span class="dv">6</span>, 
-                    <span class="dt">excelfile=</span><span class="st">"Metadata V1.xlsx"</span>, <span class="dt">outdir =</span><span class="st">"V1"</span>)
-<span class="co"># list of time series for each date range</span>
-cl_v1<span class="op">$</span>streamflow
-<span class="co"># list of corresponding metadata tables</span>
-cl_v1<span class="op">$</span>metadata</code></pre></div>
-</div>
-</div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># for each date range, consider only stations which have at least 80% of data (daily + monthly) and no </span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co"># consecutive gap longer than 6 months</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">cl_v1 &lt;-<span class="st"> </span><span class="kw"><a href="reference/extract_ts.html">extract_ts</a></span>(cl_streamflow_mm, cl_md_gaps, date_ranges, <span class="dt">c_d_min =</span> <span class="dv">80</span>, <span class="dt">c_m_min =</span> <span class="dv">80</span>, <span class="dt">lg_max =</span> <span class="dv">6</span>, </a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">                    <span class="dt">excelfile=</span><span class="st">"Metadata V1.xlsx"</span>, <span class="dt">outdir =</span><span class="st">"V1"</span>)</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co"># list of time series for each date range</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">cl_v1<span class="op">$</span>streamflow</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co"># list of corresponding metadata tables</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">cl_v1<span class="op">$</span>metadata</a></code></pre></div>
+</section></section>
 </div>
   </div>
 

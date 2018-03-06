@@ -5,4 +5,5 @@
 !.gitignore
 !missing-elev-from-DEM.csv
 !Descripcion_CAMELS_CL.txt
+!1_Catchment_attributes.csv
 !preprocessing.R

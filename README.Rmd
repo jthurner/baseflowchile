@@ -23,9 +23,9 @@ Install from github with `devtools::install_github("jthurner/baseflowchile")`.
 Created at [ITT Cologne](http://www.tt.th-koeln.de/).
 
 ## Data Source
-*Alvarez-Garreton, C., Mendoza, P., Boisier, J. P., Galleguillos, M., Zambrano-Bigiarini, M., Lara, A., Addor, N., Puelma, C., Cortes, G., Garreaud, R., and McPhee, J.:* The CAMELS-CL dataset: catchment attributes and meteorology for large sample studies – Chile dataset, to be submitted to Hydrol. Earth Syst. Sci.
+*Alvarez-Garreton, C., Mendoza, P., Boisier, J. P., Galleguillos, M., Zambrano-Bigiarini, M., Lara, A., Addor, N., Puelma, C., Cortes, G., Garreaud, R., and McPhee, J.:* [The CAMELS-CL dataset: catchment attributes and meteorology for large sample studies – Chile dataset, to be submitted to Hydrol. Earth Syst. Sci.](https://doi.org/10.5194/hess-2018-23)
 
-[Download Link](http://www.cr2.cl/recursos-y-publicaciones/bases-de-datos/datos-informacion-integrada-por-cuencas/)
+The original dataset can be downloaded from [here](http://www.cr2.cl/recursos-y-publicaciones/bases-de-datos/datos-informacion-integrada-por-cuencas/).
 
 ## Usage
 
