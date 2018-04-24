@@ -7,9 +7,9 @@ library(stringr)
 ################################################################################
 # The following files are not included in git and have to be dropped into      #
 # data-raw manually:                                                           #
-#   - 3_CAMELScl_streamflow_mm.csv, 2018-01-29                                 #
-#   - 1_Catchment_attributes.csv, 2018-01-29                                   #
-#   - cr2_qflxDaily_2018_stations.txt, 2018-01-10                              #
+#   - 3_CAMELScl_streamflow_mm.csv, 2018-04-24                                 #
+#   - 1_Catchment_attributes.csv, 2018-04-24                                   #
+#   - cr2_qflxDaily_2018_stations.txt, 2018-04-24                              #
 #                                                                              #
 # Source:                                                                      #
 # http://www.cr2.cl/recursos-y-publicaciones/bases-de-datos/datos-de-caudales/ #
@@ -58,8 +58,9 @@ md_stations <- read_csv("data-raw/cr2_qflxDaily_2018_stations.txt",
   rename(stationcode=codigo_estacion, q_start=inicio_observaciones,
          q_end=fin_observaciones)
 
+
 # reformat CAMELS CL metadata
-cl_catchment_md <- read_csv("data-raw/1_Catchment_attributes.csv",
+cl_catchment_md <- read_csv("data-raw/1_CAMELScl_attributes.csv",
                             cols(.default="c"), col_names=TRUE) %>%
   # save table to keep order of variables
   {. ->> table_original} %>%
